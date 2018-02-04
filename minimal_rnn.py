@@ -533,7 +533,7 @@ class MinimalRNN(RNN):
         return dict(list(base_config.items()) + list(config.items()))
 
     @classmethod
-    def from_config(cls, config):
+    def from_config(cls, config, custom_objects=None):
         if 'implementation' in config and config['implementation'] == 0:
             config['implementation'] = 1
-        return cls(**config)
+        return super(MinimalRNN, cls).from_config(config, custom_objects=custom_objects)
