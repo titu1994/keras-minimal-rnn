@@ -248,7 +248,6 @@ class MinimalRNNCell(Layer):
         else:
             self._recurrent_dropout_mask = None
 
-
     def call(self, inputs, states, training=None):
         # dropout matrices for input units
         dp_mask = self._dropout_mask
@@ -430,13 +429,14 @@ class MinimalRNN(RNN):
                                          **kwargs)
         self.return_attention = return_attention
 
-    def call(self, inputs, mask=None, training=None, initial_state=None):
+    def call(self, inputs, mask=None, training=None, initial_state=None, constants=None):
         self.cell._generate_dropout_mask(inputs, training=training)
         self.cell._generate_recurrent_dropout_mask(inputs, training=training)
         return super(MinimalRNN, self).call(inputs,
                                             mask=mask,
                                             training=training,
-                                            initial_state=initial_state)
+                                            initial_state=initial_state,
+                                            constants=constants)
 
     @property
     def units(self):
